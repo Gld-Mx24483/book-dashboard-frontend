@@ -28,7 +28,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         scope: 'openid profile email',
       }}
       useRefreshTokens={true}
-      cacheLocation="localstorage"
+      cacheLocation='localstorage'
     >
       <ChakraProvider value={system}>{children}</ChakraProvider>
     </Auth0Provider>

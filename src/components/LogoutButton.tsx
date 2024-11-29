@@ -9,14 +9,16 @@ const LogoutButton: React.FC = () => {
   if (!isAuthenticated) return null;
 
   return (
-    <Button 
-      className="sci-fi-auth-button logout-button"
-      onClick={() => logout({ 
-        logoutParams: { 
-          returnTo: window.location.origin 
-        } 
-      })}
-      variant="outline"
+    <Button
+      className='sci-fi-auth-button logout-button'
+      onClick={() =>
+        logout({
+          logoutParams: {
+            returnTo: window.location.origin,
+          },
+        })
+      }
+      variant='outline'
     >
       Log Out
     </Button>

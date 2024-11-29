@@ -1,10 +1,6 @@
 //App.tsx
 import React from 'react';
-import { 
-  BrowserRouter as Router, 
-  Routes, 
-  Route 
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Box, Container } from '@chakra-ui/react';
 import AuthProvider from './components/AuthProvider';
 import LoginButton from './components/LoginButton';
@@ -18,23 +14,23 @@ const App: React.FC = () => {
     <AuthProvider>
       <GraphQLProvider>
         <Router>
-          <Container maxW="container.xl" py={8}>
-            <Box mb={4} display="flex" justifyContent="flex-end">
+          <Container maxW='container.xl' py={8}>
+            <Box mb={4} display='flex' justifyContent='flex-end'>
               <LoginButton />
               <LogoutButton />
             </Box>
-            
+
             <Routes>
-              <Route path="/" element={<BookTable />} />
-              <Route 
-                path="/dashboard" 
+              <Route path='/' element={<BookTable />} />
+              <Route
+                path='/dashboard'
                 element={
                   <ProtectedRoute>
                     <BookTable />
                   </ProtectedRoute>
-                } 
+                }
               />
-              <Route path="/login" element={<LoginButton />} />
+              <Route path='/login' element={<LoginButton />} />
             </Routes>
           </Container>
         </Router>

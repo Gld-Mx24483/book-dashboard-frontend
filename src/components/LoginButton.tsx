@@ -12,8 +12,8 @@ const LoginButton: React.FC = () => {
     try {
       await loginWithRedirect({
         appState: {
-          returnTo: '/dashboard'
-        }
+          returnTo: '/dashboard',
+        },
       });
     } catch (error) {
       console.error('Login Error:', error);
@@ -21,10 +21,10 @@ const LoginButton: React.FC = () => {
   };
 
   return (
-    <Button 
-      className="sci-fi-auth-button login-button"
+    <Button
+      className='sci-fi-auth-button login-button'
       onClick={handleLogin}
-      variant="outline"
+      variant='outline'
     >
       Log In
     </Button>
