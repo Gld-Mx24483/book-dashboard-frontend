@@ -6,6 +6,7 @@ import { useQuery, useMutation, gql } from '@apollo/client';
 import { Button } from "../components/ui/button";
 import './BookTable.css'; 
 
+// GraphQL Queries and Mutations
 const GET_BOOKS = gql`
   query GetBooks {
     getBooks {
@@ -46,6 +47,12 @@ const DELETE_BOOK = gql`
   }
 `;
 
+// Utility function for text truncation
+const truncateText = (text: string, maxLength: number = 50): string => {
+  return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+};
+
+// Book interface
 interface Book {
   id: number;
   name: string;
@@ -53,18 +60,21 @@ interface Book {
 }
 
 const BookTable: React.FC = () => {
+  // Query and Authentication Hooks
   const { loading, error, data, refetch } = useQuery(GET_BOOKS);
   const { isAuthenticated, user } = useAuth0();
   
-  // State for modals and form inputs
+  // State Management
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isBookDetailsModalOpen, setIsBookDetailsModalOpen] = useState(false);
   const [bookName, setBookName] = useState('');
   const [bookDescription, setBookDescription] = useState('');
   const [currentBook, setCurrentBook] = useState<Book | null>(null);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
-  // Mutations
+  // Mutation Hooks
   const [createBook] = useMutation(CREATE_BOOK, {
     onCompleted: () => {
       refetch();
@@ -98,19 +108,17 @@ const BookTable: React.FC = () => {
     }
   });
 
-  // Helper function to reset form
+  // Helper Functions
   const resetForm = () => {
     setBookName('');
     setBookDescription('');
     setCurrentBook(null);
   };
 
-  // Open Create Modal
   const handleOpenCreateModal = () => {
     setIsCreateModalOpen(true);
   };
 
-  // Handle Create Book
   const handleCreateBook = () => {
     createBook({
       variables: {
@@ -122,7 +130,6 @@ const BookTable: React.FC = () => {
     });
   };
 
-  // Open Edit Modal
   const handleOpenEditModal = (book: Book) => {
     setCurrentBook(book);
     setBookName(book.name);
@@ -130,7 +137,6 @@ const BookTable: React.FC = () => {
     setIsEditModalOpen(true);
   };
 
-  // Handle Update Book
   const handleUpdateBook = () => {
     if (currentBook) {
       updateBook({
@@ -145,13 +151,11 @@ const BookTable: React.FC = () => {
     }
   };
 
-  // Open Delete Modal
   const handleOpenDeleteModal = (book: Book) => {
     setCurrentBook(book);
     setIsDeleteModalOpen(true);
   };
 
-  // Handle Delete Book
   const handleDeleteBook = () => {
     if (currentBook) {
       deleteBook({
@@ -162,6 +166,12 @@ const BookTable: React.FC = () => {
     }
   };
 
+  const handleOpenBookDetails = (book: Book) => {
+    setSelectedBook(book);
+    setIsBookDetailsModalOpen(true);
+  };
+
+  // Loading and Error States
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error.message}</div>;
 
@@ -208,20 +218,26 @@ const BookTable: React.FC = () => {
       <Table.Root size="md" width="100%">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader textAlign="center" verticalAlign="middle">ID</Table.ColumnHeader>
-            <Table.ColumnHeader textAlign="center" verticalAlign="middle">Name</Table.ColumnHeader>
-            <Table.ColumnHeader textAlign="center" verticalAlign="middle">Description</Table.ColumnHeader>
-            {isAuthenticated && <Table.ColumnHeader textAlign="center" verticalAlign="middle">Actions</Table.ColumnHeader>}
+            <Table.ColumnHeader textAlign="center">ID</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign="center">Name</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign="center">Description</Table.ColumnHeader>
+            {isAuthenticated && <Table.ColumnHeader textAlign="center">Actions</Table.ColumnHeader>}
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {data.getBooks.map((book: Book) => (
             <Table.Row key={book.id}>
-              <Table.Cell textAlign="center" verticalAlign="middle">{book.id}</Table.Cell>
-              <Table.Cell textAlign="center" verticalAlign="middle">{book.name}</Table.Cell>
-              <Table.Cell textAlign="center" verticalAlign="middle">{book.description}</Table.Cell>
+              <Table.Cell textAlign="center">{book.id}</Table.Cell>
+              <Table.Cell textAlign="center">{book.name}</Table.Cell>
+              <Table.Cell 
+                textAlign="center"
+                onClick={() => handleOpenBookDetails(book)}
+                style={{ cursor: 'pointer' }}
+              >
+                {truncateText(book.description || '')}
+              </Table.Cell>
               {isAuthenticated && (
-                <Table.Cell textAlign="center" verticalAlign="middle">
+                <Table.Cell textAlign="center">
                   <div className="action-button-container">
                     <Button 
                       className="action-button edit-button"
@@ -352,6 +368,31 @@ const BookTable: React.FC = () => {
                 }}
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Book Details Modal */}
+      {isBookDetailsModalOpen && selectedBook && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2 className="modal-title">Book Details</h2>
+            <div className="book-details-content">
+              <p><strong>Name:</strong> {selectedBook.name}</p>
+              <p><strong>Description:</strong> {selectedBook.description}</p>
+              <p><strong>ID:</strong> {selectedBook.id}</p>
+            </div>
+            <div className="modal-actions">
+              <button 
+                className="modal-button cancel-button"
+                onClick={() => {
+                  setIsBookDetailsModalOpen(false);
+                  setSelectedBook(null);
+                }}
+              >
+                Close
               </button>
             </div>
           </div>

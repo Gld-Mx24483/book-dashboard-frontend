@@ -113,6 +113,23 @@
   }
 }
 
+.book-details-content {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.book-details-content p {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.book-details-content p strong {
+  color: #007bff;
+  margin-right: 10px;
+}
+
 .loading, .error {
   color: #00ffff;
   text-align: center;
