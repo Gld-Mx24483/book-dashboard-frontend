@@ -18,7 +18,7 @@ const GraphQLProvider: React.FC<{ children: React.ReactNode }> = ({
   const graphqlEndpoint =
     process.env.NODE_ENV === 'production'
       ? process.env.REACT_APP_PRODUCTION_BACKEND_URL // Production URL if in production environment
-      : process.env.REACT_APP_LOCAL_BACKEND_URL ||  // Local URL or fallback to default
+      : process.env.REACT_APP_LOCAL_BACKEND_URL || // Local URL or fallback to default
         'http://localhost:9000/graphql';
 
   // HTTP link to connect Apollo Client to the GraphQL server
