@@ -27,7 +27,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "vite",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -53,6 +52,9 @@
   "devDependencies": {
     "@types/node": "^22.10.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
     "vite": "^6.0.1"
   }
 }
