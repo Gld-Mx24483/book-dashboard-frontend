@@ -167,6 +167,10 @@ const BookTable: React.FC = () => {
 
   return (
     <div className="book-table-container">
+      {/* Book Dashboard Heading */}
+      <h1 className="book-dashboard-title">Book Dashboard</h1>
+      <h2 className="book-dashboard-sub">Welcome,</h2>
+
       {/* User Profile Section */}
       {isAuthenticated && user && (
         <div className="user-profile-sci-fi">
