@@ -13,7 +13,7 @@ const GraphQLProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
   const httpLink = createHttpLink({
-    uri: process.env.REACT_APP_GRAPHQL_ENDPOINT || 'http://localhost:3000/graphql',
+    uri: process.env.REACT_APP_GRAPHQL_ENDPOINT || 'http://localhost:9000/graphql',
   });
 
   const authLink = setContext(async () => {

@@ -24,8 +24,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       clientId={process.env.REACT_APP_AUTH0_CLIENT_ID || ''}
       authorizationParams={{
         redirect_uri: window.location.origin,
-        // Remove or comment out the audience if not using a specific API
-        // audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
         scope: 'openid profile email',
       }}
       useRefreshTokens={true}

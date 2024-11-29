@@ -19,12 +19,13 @@ const App: React.FC = () => {
       <GraphQLProvider>
         <Router>
           <Container maxW="container.xl" py={8}>
-            <Box mb={4}>
+            <Box mb={4} display="flex" justifyContent="flex-end">
               <LoginButton />
               <LogoutButton />
             </Box>
             
             <Routes>
+              <Route path="/" element={<BookTable />} />
               <Route 
                 path="/dashboard" 
                 element={
@@ -43,30 +44,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-// import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
