@@ -173,7 +173,7 @@ const BookTable: React.FC = () => {
   };
 
   // Loading and Error States
-  if (loading) return <div className='loading'>Loading...</div>;
+  if (loading) return <div className='Loading,Render Server Restarting...'>Loading...</div>;
   if (error) return <div className='error'>{error.message}</div>;
 
   return (
